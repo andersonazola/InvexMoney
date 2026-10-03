@@ -1,13 +1,39 @@
-#Introdução
-• Descrição Geral do Projeto: Breve descrição do projeto, seu propósito e a motivação por trás de sua criação.
-• Objetivos: Metas específicas que o projeto visa alcançar.
-• Escopo: Limitações e o alcance do projeto.
 
-Visão Geral do Sistema
-• Arquitetura do Sistema: Descrição da arquitetura geral do sistema.
-• Funcionalidades: Descreva as funcionalidades que serão desenvolvidas no projeto.
+# **Projeto Invex Money** 
 
-Configuração do Ambiente
+<!-- Breve descrição do projeto, seu propósito e a motivação por trás de sua criação. -->
+
+
+Invex Money nasceu de um grande entusiasmo meu pelo mundo dos investimentos. Então decidi unir duas coisas pelo qual tenho grande interesse e paixão. Invex Monbey é uma sistema web de gestão de carteira de investimento, voltado para o investidor que deseja monitorar seus investimentos, além de poder consultar ativos especificos e ter acesso a relátorios de mercado diário. 
+
+
+• **Escopo:** a principio o sistema web, irá ter a disponibilidade apenas de ativos que estão listados na b3, mas o objetivo é que em pouco tempo o sistema possa receber atualizações e melhorias para que consiga ter uma abrangência maior, tendo acesso a investimentos em renda fixa, Criptomoedas, ativos estrangeiros, etc...
+
+
+## Visão Geral do Sistema
+• **Arquitetura do Sistema:** O sistema será desenvolvido na arquitetura em camadas - Clen Code (API - Application - Service - Repository - Domain)
+
+• **Funcionalidades:**
+
+      o Usuário pode se cadastrar/logar com email e senha (implementação JWT);
+
+      o Uma TopBar com as telas (Carteira, Relatorio IA, Ativos, e um componente de (B3 Fechada ou B3 Aberto);
+
+      o Tela inicial (carteira) com patrimonio investido e evolução da carteira do usuário, resumo da carteira(quantidade de ativos, custo total, e resultado);
+
+      o Usuário pode permitir visualizar ou não o valor do patrimônio;
+        
+      o Usuário pode ver a porcentagem que ele tem em cada tipo de ativo (Ações, Fiis, Etfs);
+    
+      o Usuário pode ver suas posições;
+
+      o usuário pode gerar relátorio da IA, que vai analisar o fechamento do pregão diário e trazer as principais informações. (Relátorio de fechamento do dia) Usuário vai pode exportar isso em um pdf;
+
+      o Tela de Ativos, o usuário vai pode visualizar seus ativos, suas posições, e também vai pode buscar por um ativo especifico. Usuário também vai pode adicionar um ativo em sua carteira.  
+        
+        
+
+## Configuração do Ambiente
 • Requisitos de Software e Hardware: Lista de requisitos necessários para rodar o projeto.
 • Instruções de Instalação: Passos detalhados para instalar o software necessário.
 • Configuração do Ambiente de Desenvolvimento: Instruções para configurar o ambiente de desenvolvimento.
