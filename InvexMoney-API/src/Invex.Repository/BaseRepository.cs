@@ -1,3 +1,4 @@
+using Invex.Repository.Context;
 public abstract class BaseRepository
 {
     protected readonly InvexContext _context;

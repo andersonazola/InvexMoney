@@ -2,6 +2,7 @@ using Invex.Domain.Entidades;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Dapper;
+using Invex.Repository.Context;
 
 namespace Invex.Repository;
 

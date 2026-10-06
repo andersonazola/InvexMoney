@@ -1,4 +1,4 @@
-﻿namespace Invex.Domain;
+﻿namespace Invex.Domain.Entidades;
 
 public class Usuario
 {

@@ -3,6 +3,8 @@ using Invex.Repository.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Invex.Domain.Entidades;
 
+namespace Invex.Repository.Context;
+
 public class InvexContext : DbContext
 {
     public DbSet<Usuario> Usuarios { get; set; }
