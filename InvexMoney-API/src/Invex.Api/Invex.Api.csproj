@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Invex.Repository\Invex.Repository.csproj" />
     <ProjectReference Include="..\Invex.Domain\Invex.Domain.csproj" />
+    <ProjectReference Include="..\Invex.Application\Invex.Application.csproj" />
   </ItemGroup>
 
 </Project>

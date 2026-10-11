@@ -8,13 +8,13 @@ namespace Invex.Repository;
 
 public class UsuarioRepository : BaseRepository, IUsuarioRepository
 {
-    public UsuarioRepository(InvexContext context) : base(context){}
+    public UsuarioRepository(InvexContext context) : base(context) { }
 
     public async Task<int> CriarUsuario(Usuario usuario)
     {
         _context.Usuarios.Add(usuario);
-      await  _context.SaveChangesAsync();
-        return  usuario.Id;
+        await _context.SaveChangesAsync();
+        return usuario.Id;
     }
 
     public async Task Atualizar(Usuario usuario)
