@@ -3,6 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+bin/
+obj/
+node_modules/
+appsettings.Development.json
 # User-specific files
 *.rsuser
 *.suo

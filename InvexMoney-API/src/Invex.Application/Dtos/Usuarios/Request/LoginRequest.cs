@@ -1,0 +1,8 @@
+using Invex.Domain.Entidades;
+namespace Invex.Application.Dtos.Request;
+
+public class LoginRequest
+{
+    public string Email {get; set;}
+    public string Senha {get; set;}
+}
