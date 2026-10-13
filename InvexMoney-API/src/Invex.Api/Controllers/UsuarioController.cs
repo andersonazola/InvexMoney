@@ -50,17 +50,4 @@ public class UsuarioController : ControllerBase
     }
 
 
-    /// <summary>
-    /// Devolve os dados do usuário aunteticado 
-    /// </summary>
-    [Authorize]
-    [HttpGet("Eu")]
-    public IActionResult Eu()
-    {
-        var id = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
-        var email = User.FindFirst(JwtRegisteredClaimNames.Email)?.Value;
-
-        return Ok(new { id, email });
-    }
-
 }

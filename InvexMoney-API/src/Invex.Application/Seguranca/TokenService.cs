@@ -18,7 +18,8 @@ public class TokenService : ITokenService
 
     public string GerarToken(Usuario usuario)
     {
-        ArgumentNullException.ThrowIfNull(usuario);
+        if(usuario == null)
+            throw new ArgumentNullException(nameof(usuario));
         
         var chave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Chave));
 
