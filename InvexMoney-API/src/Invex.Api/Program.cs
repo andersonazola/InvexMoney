@@ -3,6 +3,13 @@ using Invex.Repository.Context;
 using Microsoft.EntityFrameworkCore;
 using Invex.Application;
 using Invex.Application.Interfaces;
+using Invex.Application.Seguranca;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Reflection;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +31,33 @@ builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
 builder.Services.AddControllers();
 
+//Add Jwt
+var jwtSettings = builder.Configuration.GetSection(JwtSettings.Secao).Get<JwtSettings>() ?? throw new InvalidOperationException("Configuração JwtSettings não encontrada");
+
+if(Encoding.UTF8.GetByteCount(jwtSettings.Chave) < 32)
+    throw new InvalidOperationException("JwtSettings: Chave precisa ter pelo menos 32 caracteres");
+
+builder.Services.AddSingleton(jwtSettings);
+builder.Services.AddSingleton<ITokenService, TokenService>();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.MapInboundClaims = false;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = jwtSettings.Emissor,
+            ValidateAudience = true,
+            ValidAudience = jwtSettings.Audiencia,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Chave)),
+            ClockSkew = TimeSpan.Zero
+        };
+    });
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -39,6 +73,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

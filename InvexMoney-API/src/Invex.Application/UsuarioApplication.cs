@@ -10,10 +10,12 @@ public class UsuarioApplication : IUsuarioApplication
 
     private readonly IUsuarioRepository _usuarioRepository;
     private readonly ISenhaHash _senhaHash;
-    public UsuarioApplication(IUsuarioRepository usuarioRepository, ISenhaHash senhaHash)
+    private readonly ITokenService _tokenService;
+    public UsuarioApplication(IUsuarioRepository usuarioRepository, ISenhaHash senhaHash, ITokenService tokenService)
     {
         _usuarioRepository = usuarioRepository;
         _senhaHash = senhaHash;
+        _tokenService = tokenService;
     }
 
     public async Task<UsuarioResponse> CadastrarUsuario(UsuarioCadastroRequest request)
@@ -66,7 +68,8 @@ public class UsuarioApplication : IUsuarioApplication
         return new LoginResponse()
         {
             Nome = usuario.Nome,
-            Email = usuario.Email
+            Email = usuario.Email,
+            Token = _tokenService.GerarToken(usuario)
         };
 
     }
