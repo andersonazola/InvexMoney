@@ -1,6 +1,0 @@
-@Invex.Api_HostAddress = http://localhost:5038
-
-GET {{Invex.Api_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
