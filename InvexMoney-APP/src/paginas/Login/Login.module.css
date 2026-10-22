@@ -1,0 +1,133 @@
+.login_conteudo {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    box-sizing: border-box;
+
+    background-image: url('../../assets/LoginInvexMoney.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.grupo_campo {
+    margin-bottom: 50px;     
+}
+
+.botao_novo {
+    margin-top: 60px;       
+}
+
+
+/* Só a parte clara da imagem (o painel escuro vai até ~42%) */
+.login_formulario {
+    flex: 0 0 58%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;      
+    align-items: center;
+    padding: 24px;                 
+    box-sizing: border-box;
+}
+
+.titulo {
+    font-size: clamp(2.2rem, 3.2vw, 3.2rem);   /* era 2.4rem */
+    font-weight: 600;
+    color: #0b1f3f;
+    text-align: center;
+    margin-bottom: 56px;                        /* era 40px */
+    transform: translateY(-40px);               /* sobe o título; aumente para subir mais */
+}
+.login_formulario form {
+    width: 100%;
+    max-width: 460px;
+}
+
+.login_formulario label {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+.login_formulario input {
+    padding: 14px 16px;
+    font-size: 1.05rem;
+    border-radius: 10px;
+}
+
+/* Wrapper do campo de senha: permite posicionar o olhinho dentro */
+.campo_senha {
+    position: relative;
+}
+
+.campo_senha input {
+    padding-right: 52px;
+}
+
+.botao_verSenha {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 1.4rem;
+    color: #555;
+}
+
+.botao_novo {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    margin-top: 32px;
+    border: none;
+    border-radius: 10px;
+    background-color: #070b3b;
+    color: white;
+    font-size: 1.15rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.botao_novo:hover {
+    background-color: #001b3d;
+}
+
+.texto_cadastro {
+    margin-top: 24px;
+    text-align: center;
+    font-size: 1rem;
+    color: #0b1f3f;
+}
+
+.link_cadastro {
+    color: #3b9eff;              /* o azul do logo, para combinar */
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.link_cadastro:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .login_conteudo {
+        background-image: none;          
+        background-color: #dde2e7;
+    }
+
+    .login_formulario {
+        flex: 1 1 100%;
+        padding: 8vh 20px 24px;
+    }
+
+    .titulo {
+        font-size: 1.9rem;
+        margin-bottom: 28px;
+    }
+}
