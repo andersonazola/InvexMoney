@@ -7,7 +7,7 @@ import LoginAPI from "../../Services/loginAPI";
 import style from "./Login.module.css";
 
 
-export function Login() {
+export function Login() { //declarando o componente
     const { mostrarAlerta } = useAlert();
 
     const [email, setEmail] = useState('');
@@ -24,8 +24,10 @@ export function Login() {
         setVerSenha(verSenha === "password" ? "text" : "password");
     }
 
+
+    //Valida, pergunta ao servidor e conforme a resposta, ou leva para a home ou avisa que deu errado 
     async function handleLogin(e) {
-        e.preventDefault();
+        e.preventDefault(); //Impede que a pagina seja recarregada 
 
         if (!isFormValid()) {
             mostrarAlerta("Insira um e-mail válido e uma senha com no minimo 8 caracteres", "warning");
@@ -35,6 +37,7 @@ export function Login() {
         try {
             const response = await LoginAPI.loginAsync(email, senha);
 
+            //Responsavel por guardar os dados do usuário no local storage, exibir o alerta de boas vindas e redirecionar para a rota home 
             if (response?.status === 200) {
                 localStorage.setItem("usuario", JSON.stringify(response.data));
                 mostrarAlerta(`Bem-Vindo, ${response.data.nome}!`, 'success', () => {
@@ -57,8 +60,8 @@ export function Login() {
     }
 
 
-
-    return (
+ 
+    return ( 
         <div className={style.login_conteudo}>
             <div className={style.login_formulario}>
                 <h1 className={style.titulo}>Acesse sua Carteira</h1>

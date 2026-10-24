@@ -33,12 +33,12 @@
 }
 
 .titulo {
-    font-size: clamp(2.2rem, 3.2vw, 3.2rem);   /* era 2.4rem */
+    font-size: clamp(2.2rem, 3.2vw, 3.2rem);  
     font-weight: 600;
     color: #0b1f3f;
     text-align: center;
-    margin-bottom: 56px;                        /* era 40px */
-    transform: translateY(-40px);               /* sobe o título; aumente para subir mais */
+    margin-bottom: 56px;                    
+    transform: translateY(-40px);               
 }
 .login_formulario form {
     width: 100%;
@@ -57,7 +57,6 @@
     border-radius: 10px;
 }
 
-/* Wrapper do campo de senha: permite posicionar o olhinho dentro */
 .campo_senha {
     position: relative;
 }
