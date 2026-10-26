@@ -49,5 +49,4 @@ public class UsuarioController : ControllerBase
         return Ok(loginResponse);
     }
 
-
 }

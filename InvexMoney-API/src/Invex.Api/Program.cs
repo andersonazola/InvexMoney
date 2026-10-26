@@ -13,7 +13,6 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -34,7 +33,7 @@ builder.Services.AddControllers();
 //Add Jwt
 var jwtSettings = builder.Configuration.GetSection(JwtSettings.Secao).Get<JwtSettings>() ?? throw new InvalidOperationException("Configuração JwtSettings não encontrada");
 
-if(Encoding.UTF8.GetByteCount(jwtSettings.Chave) < 32)
+if (Encoding.UTF8.GetByteCount(jwtSettings.Chave) < 32)
     throw new InvalidOperationException("JwtSettings: Chave precisa ter pelo menos 32 caracteres");
 
 builder.Services.AddSingleton(jwtSettings);
@@ -59,6 +58,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
+
+const string PoliticaCors = "FrontEnd"; // Navegador  bloqueia as chamadas até a API liberar a origem do front
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(PoliticaCors, policy =>
+        policy.WithOrigins("http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
+
+
 var app = builder.Build();
 
 
@@ -71,8 +82,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-app.UseHttpsRedirection();
+app.UseCors(PoliticaCors);
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

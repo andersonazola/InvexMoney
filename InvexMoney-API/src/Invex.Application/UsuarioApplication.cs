@@ -74,8 +74,6 @@ public class UsuarioApplication : IUsuarioApplication
 
     }
 
-
-
     #region  Uteis
     private static void ValidarInformacoesCadastro(UsuarioCadastroRequest usuarioRequest)
     {
