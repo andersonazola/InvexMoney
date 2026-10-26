@@ -1,10 +1,11 @@
-import { useNavigate, Link} from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import { useState } from "react";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { useAlert } from "../../componentes/Alert/AlertContext";
 import LoginAPI from "../../Services/loginAPI";
 import style from "./Login.module.css";
+import { salvarSessao } from "../../Services/sessao";
 
 
 export function Login() { //declarando o componente
@@ -17,17 +18,19 @@ export function Login() { //declarando o componente
     const navigate = useNavigate();
 
     const isFormValid = () => {
-        return email.length > 0 && senha.length >= 8;
+        return email.trim().length > 0 && senha.length >= 8;
     };
+
 
     function handleSenha() {
         setVerSenha(verSenha === "password" ? "text" : "password");
     }
 
 
+    // É chamada quando o formulário é enviado
     //Valida, pergunta ao servidor e conforme a resposta, ou leva para a home ou avisa que deu errado 
     async function handleLogin(e) {
-        e.preventDefault(); //Impede que a pagina seja recarregada 
+        e.preventDefault(); //Impede que a pagina seja recarregada ao enviar 
 
         if (!isFormValid()) {
             mostrarAlerta("Insira um e-mail válido e uma senha com no minimo 8 caracteres", "warning");
@@ -36,11 +39,19 @@ export function Login() { //declarando o componente
 
         try {
             const response = await LoginAPI.loginAsync(email, senha);
+            const { token, nome, email: emailUsuario } = response.data; 
+
+
+            if (!token) {
+                mostrarAlerta("Resposta inválida do servidor", "danger");
+                return;
+            }
+
+            salvarSessao({ token, nome, email: emailUsuario });
 
             //Responsavel por guardar os dados do usuário no local storage, exibir o alerta de boas vindas e redirecionar para a rota home 
             if (response?.status === 200) {
-                localStorage.setItem("usuario", JSON.stringify(response.data));
-                mostrarAlerta(`Bem-Vindo, ${response.data.nome}!`, 'success', () => {
+                mostrarAlerta(`Bem-Vindo, ${response.data.nome}!`, "success", () => {
                     navigate("/home");
                 });
             }
@@ -60,8 +71,8 @@ export function Login() { //declarando o componente
     }
 
 
- 
-    return ( 
+
+    return (
         <div className={style.login_conteudo}>
             <div className={style.login_formulario}>
                 <h1 className={style.titulo}>Acesse sua Carteira</h1>
@@ -74,6 +85,7 @@ export function Login() { //declarando o componente
                             name="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            maxLength={100}
                             required
                         />
                     </Form.Group>
@@ -86,6 +98,7 @@ export function Login() { //declarando o componente
                                 name="senha"
                                 value={senha}
                                 onChange={(e) => setSenha(e.target.value)}
+                                maxLength={50}
                                 required
                             />
                             <button type="button" onClick={handleSenha} className={style.botao_verSenha}>

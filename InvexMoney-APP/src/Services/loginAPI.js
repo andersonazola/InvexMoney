@@ -7,7 +7,7 @@ const LoginAPI = {
                 Email: email,
                 Senha: senha
             };
-            const response = await HTTPClient.post(`api/usuario/Login`);
+            const response = await HTTPClient.post(`usuario/Login`, usuarioLogin);
             return response;
         }
         catch (error) {
@@ -15,7 +15,7 @@ const LoginAPI = {
             throw error;
         }
     }
-}
+};
 
 export default LoginAPI;
 

@@ -18,7 +18,7 @@ export function Cadastro() { // declarando o componente
     const navigate = useNavigate();
 
     const isFormValid = () => {
-        return nome.trim().length > 0 && email.length > 0 && senha.length >= 8;
+        return nome.trim().length > 0 && email.trim().length > 0 && senha.length >= 8;
     };
 
     function handleSenha() {
@@ -40,14 +40,13 @@ export function Cadastro() { // declarando o componente
         }
 
         try {
-            const response = await UsuarioAPI.cadastrarAsync(nome, email, senha);
+            await UsuarioAPI.cadastrarAsync(nome, email, senha);
 
-            if (response?.status === 201) {
-                mostrarAlerta(`Cadastro realizado com sucesso!`, () => {
+                mostrarAlerta(`Cadastro realizado com sucesso!`, "success", () => {
                     navigate("/");
                 })
             }
-        } catch (error) {
+         catch (error) {
             if (error.response?.status === 400) {
                 mostrarAlerta("Dados inválidos, confira as informações e tente novamente", "danger");
             } else if (error.response?.status === 409) {
