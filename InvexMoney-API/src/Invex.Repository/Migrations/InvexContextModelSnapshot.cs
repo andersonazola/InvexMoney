@@ -22,6 +22,33 @@ namespace Invex.Repository.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Invex.Domain.Entidades.Relatorio", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Conteudo")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(MAX)")
+                        .HasColumnName("Conteudo");
+
+                    b.Property<DateTime>("DataReferencia")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DataReferencia");
+
+                    b.Property<DateTime>("GeradoEm")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("GeradoEm");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Relatorio", (string)null);
+                });
+
             modelBuilder.Entity("Invex.Domain.Entidades.Usuario", b =>
                 {
                     b.Property<int>("Id")
