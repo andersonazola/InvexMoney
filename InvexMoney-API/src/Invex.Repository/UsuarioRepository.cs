@@ -50,14 +50,13 @@ public class UsuarioRepository : BaseRepository, IUsuarioRepository
 
     public async Task<List<Usuario>> Listar()
     {
-        const string sql = @"
-        SELECT * 
-        FROM Usuarios";
+        const string sql = "SELECT * FROM vw_ListarUsuarios";
 
-        string stringDeConexao = _context.Database.GetDbConnection().ConnectionString;
-        using var connection = new SqlConnection(stringDeConexao);
-        var resultado = await connection.QueryAsync<Usuario>(sql);
-        return resultado.ToList();
+        string stringConexao = _context.Database.GetDbConnection().ConnectionString;
+        using var connection = new SqlConnection(stringConexao);
+
+        var res = await connection.QueryAsync<Usuario>(sql);
+        return res.ToList();
     }
 
     public async Task<Usuario?> ObterPorEmail(string email)
