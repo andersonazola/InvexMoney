@@ -12,7 +12,7 @@ public class UsuarioRepository : BaseRepository, IUsuarioRepository
 {
     public UsuarioRepository(InvexContext context) : base(context) { }
 
-    public async Task CriarUsuario(Usuario usuario)
+    public async Task<int> CriarUsuario(Usuario usuario)
     {
         const string sql = "sp_CadastrarUsuario";
 
@@ -26,7 +26,7 @@ public class UsuarioRepository : BaseRepository, IUsuarioRepository
         string stringConexao = _context.Database.GetDbConnection().ConnectionString;
         using var connection = new SqlConnection(stringConexao);
 
-        await connection.ExecuteAsync(sql, parametros, commandType: CommandType.StoredProcedure);
+        return await connection.QuerySingleAsync<int>(sql, parametros, commandType: CommandType.StoredProcedure);
     }
 
     public async Task AtualizarEmail(int usuarioId, string novoEmail)
