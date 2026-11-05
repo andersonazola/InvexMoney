@@ -30,7 +30,19 @@ public class RelatorioRepository : BaseRepository, IRelatorioReposirory
     }
     public async Task EditarRelatorio(Relatorio relatorio)
     {
-        _context.Update(relatorio);
-        await _context.SaveChangesAsync();
+        const string sql = "sp_AtualizarRelatorio";
+
+        var parametros = new
+        {
+            Id = relatorio.Id,
+            Datareferencia = relatorio.DataReferencia,
+            GeradoEm = relatorio.GeradoEm,
+            Conteudo = relatorio.Conteudo
+        };
+
+        string stringConexao = _context.Database.GetDbConnection().ConnectionString;
+        using var connection = new SqlConnection(stringConexao);
+
+        await connection.ExecuteAsync(sql, parametros, commandType: CommandType.StoredProcedure);
     }
 }
