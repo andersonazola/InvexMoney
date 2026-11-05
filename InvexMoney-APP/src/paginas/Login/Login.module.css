@@ -114,6 +114,8 @@
     text-decoration: underline;
 }
 
+
+/*  adaptar o layout da tela quando ela for aberta em dispositivos iguais ou menores que 768%  */
 @media (max-width: 768px) {
     .login_conteudo {
         background-image: none;          

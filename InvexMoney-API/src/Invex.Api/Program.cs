@@ -17,6 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton(TimeProvider.System);
 
 //add servico de banco de dados
 builder.Services.AddDbContext<InvexContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("InvexDb")));

@@ -3,6 +3,8 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Dapper;
 using Invex.Repository.Context;
+using System.Data;
+using System.Diagnostics;
 
 namespace Invex.Repository;
 
@@ -12,27 +14,61 @@ public class UsuarioRepository : BaseRepository, IUsuarioRepository
 
     public async Task<int> CriarUsuario(Usuario usuario)
     {
-        _context.Usuarios.Add(usuario);
-        await _context.SaveChangesAsync();
-        return usuario.Id;
+        const string sql = "sp_CadastrarUsuario";
+
+        var parametros = new
+        {
+            Nome = usuario.Nome,
+            Email = usuario.Email,
+            Senha = usuario.Senha,
+            DataCriacao = usuario.DataCriacao
+        };
+        string stringConexao = _context.Database.GetDbConnection().ConnectionString;
+        using var connection = new SqlConnection(stringConexao);
+
+        return await connection.QuerySingleAsync<int>(sql, parametros, commandType: CommandType.StoredProcedure);
     }
 
-    public async Task Atualizar(Usuario usuario)
+    public async Task AtualizarEmail(int usuarioId, string novoEmail)
     {
-        _context.Usuarios.Update(usuario);
-        await _context.SaveChangesAsync();
+        var parametros = new { UsuarioId = usuarioId, NovoEmail = novoEmail };
+
+        string stringConexao = _context.Database.GetDbConnection().ConnectionString;
+        using var connection = new SqlConnection(stringConexao);
+        await connection.ExecuteAsync("sp_AtualizarEmailUsuario", parametros, commandType: CommandType.StoredProcedure);
     }
+
+    public async Task AtualizarSenha(int usuarioId, string novaSenha)
+    {
+        var parametros = new { UsuarioId = usuarioId, NovaSenha = novaSenha };
+
+        string stringConexao = _context.Database.GetDbConnection().ConnectionString;
+        using var connection = new SqlConnection(stringConexao);
+        await connection.ExecuteAsync("sp_AtualizaSenhaUsuario", parametros, commandType: CommandType.StoredProcedure);
+    }
+
 
     public async Task<List<Usuario>> Listar()
     {
-        const string sql = @"
-        SELECT * 
-        FROM Usuarios";
+        const string sql = "SELECT * FROM vw_ListarUsuarios";
 
-        string stringDeConexao = _context.Database.GetDbConnection().ConnectionString;
-        using var connection = new SqlConnection(stringDeConexao);
-        var resultado = await connection.QueryAsync<Usuario>(sql);
-        return resultado.ToList();
+        string stringConexao = _context.Database.GetDbConnection().ConnectionString;
+        using var connection = new SqlConnection(stringConexao);
+
+        var res = await connection.QueryAsync<Usuario>(sql);
+        return res.ToList();
+    }
+
+    public async Task<Usuario?> ObterPorEmail(string email)
+    {
+        const string sql = "sp_ObterUsuarioPorEmail";
+
+        var parametros = new { Email = email };
+
+        string stringConexao = _context.Database.GetDbConnection().ConnectionString;
+        using var connection = new SqlConnection(stringConexao);
+
+        return await connection.QueryFirstOrDefaultAsync<Usuario>(sql, parametros, commandType: CommandType.StoredProcedure);
     }
 
     public async Task<Usuario?> Obter(int usuarioId)
@@ -47,15 +83,16 @@ public class UsuarioRepository : BaseRepository, IUsuarioRepository
         return await connection.QuerySingleOrDefaultAsync<Usuario>(sql, new { UsuarioId = usuarioId });
     }
 
-    public async Task<Usuario?> ObterPorEmail(string email)
-    {
-        const string sql = @"
-        SELECT UsuarioId AS Id, Nome, Email, Senha, DataCriacao 
-        FROM Usuarios
-        WHERE Email = @Email";
 
-        string stringDeConexao = _context.Database.GetDbConnection().ConnectionString;
-        using var connection = new SqlConnection(stringDeConexao);
-        return await connection.QueryFirstOrDefaultAsync<Usuario>(sql, new { Email = email });
+    public async Task DeletarUsuario(int UsuarioId)
+    {
+        const string sql = "sp_DeletarUsuario";
+        var parametros = new { UsuarioId = UsuarioId };
+
+        string stringConexao = _context.Database.GetDbConnection().ConnectionString;
+        using var connection = new SqlConnection(stringConexao);
+
+        await connection.ExecuteAsync(sql, parametros, commandType: CommandType.StoredProcedure);
     }
+
 }

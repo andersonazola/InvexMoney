@@ -108,6 +108,8 @@
     text-decoration: underline;
 }
 
+
+/*  adaptar o layout da tela quando ela for aberta em dispositivos iguais ou menores que 768px  */
 @media (max-width: 768px) {
     .cadastro_conteudo {
         background-image: none;
