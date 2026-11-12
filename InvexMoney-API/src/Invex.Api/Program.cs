@@ -8,6 +8,10 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Reflection;
+using System.Net.Http.Headers;
+using Invex.Services.Brapi;
+using Invex.Services.Interfaces;
+using Invex.Services.BancoCentral;
 
 
 
@@ -28,6 +32,12 @@ builder.Services.AddScoped<IUsuarioApplication, UsuarioApplication>();
 
 // Add interfaces do banco
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+
+// Add servico BrapiDev
+builder.Services.AddScoped<IBrapiService, BrapiService>();
+
+//Add servico Banco Central
+builder.Services.AddHttpClient<IBancoCentralService, BancoCentralService>();
 
 builder.Services.AddControllers();
 
@@ -88,4 +98,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
+
+
 
