@@ -39,6 +39,12 @@ builder.Services.AddScoped<IBrapiService, BrapiService>();
 //Add servico Banco Central
 builder.Services.AddHttpClient<IBancoCentralService, BancoCentralService>();
 
+//Add sevice IA
+builder.Services.AddScoped<IAIService, AIService>();
+builder.Services.AddScoped<IRelatorioApplication, RelatorioApplication>();
+builder.Services.AddScoped<IRelatorioReposirory, RelatorioRepository>();
+builder.Services.AddSingleton(TimeProvider.System);
+
 builder.Services.AddControllers();
 
 //Add Jwt

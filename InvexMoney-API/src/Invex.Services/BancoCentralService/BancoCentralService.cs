@@ -11,7 +11,7 @@ public class BancoCentralService : IBancoCentralService
 
     public BancoCentralService(HttpClient client)
     {
-
+ 
         _client = client;
         _client.BaseAddress = new Uri("https://api.bcb.gov.br/"); 
         _client.Timeout = TimeSpan.FromSeconds(60);
