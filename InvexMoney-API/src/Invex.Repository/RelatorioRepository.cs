@@ -45,4 +45,14 @@ public class RelatorioRepository : BaseRepository, IRelatorioReposirory
 
         await connection.ExecuteAsync(sql, parametros, commandType: CommandType.StoredProcedure);
     }
+
+    public async Task<Relatorio?> ObterUltimoRelatorio()
+    {
+        const string sql = "sp_ObterUltimoRelatorio";
+
+        string stringConexao = _context.Database.GetDbConnection().ConnectionString;
+        using var connection = new SqlConnection(stringConexao);
+
+        return await connection.QueryFirstOrDefaultAsync<Relatorio>(sql, commandType: CommandType.StoredProcedure);
+    }
 }

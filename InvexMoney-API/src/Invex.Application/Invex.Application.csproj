@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Invex.Repository\Invex.Repository.csproj" />
     <ProjectReference Include="..\Invex.Domain\Invex.Domain.csproj" />
+    <ProjectReference Include="..\Invex.Services\Invex.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>
